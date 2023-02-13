@@ -1,1 +1,8 @@
-<h1>what's poppin</h1>
+{% block header %}
+  <h1>{% block title %}Message Bank{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <p><a href="/">Submit messages</a><p>
+    <p><a href="/view/">View messages</a><p>
+{% endblock %}
