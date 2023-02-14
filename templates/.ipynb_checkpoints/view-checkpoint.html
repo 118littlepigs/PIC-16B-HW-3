@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block header %}
+{% block header2 %}
   <h1>{% block title %}Read some messages!{% endblock %}</h1>
 {% endblock %}
 
-{% block content %}
+{% block message_list %}
     {% for message in messages %}
         <p>
             {{message[1]}} <br>

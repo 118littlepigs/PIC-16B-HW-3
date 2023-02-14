@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block header %}
+{% block header2 %}
   <h1>{% block title %}Submit a message!{% endblock %}</h1>
 {% endblock %}
 
-{% block content %}
+{% block submission %}
   <form method="post">
       <label for="message">Message: </label>
       <input type="text" name="message" id="message">
@@ -16,8 +16,8 @@
   </form>
 {% endblock %}
 
-{% if {{submit}}%}
-    {% block content %}
+{% if submit %}
+    {% block thanks %}
         <p>Thank you for your submission!</p>
     {% endblock %}
 {% endif %}

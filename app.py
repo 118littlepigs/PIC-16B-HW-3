@@ -39,23 +39,26 @@ def insert_message(request):
 def random_messages(n):
     db = get_message_db()
     cursor = db.cursor()
-    cursor.execute("SELECT handle,message FROM table ORDER BY RANDOM() LIMIT n")
+    cursor.execute("SELECT handle,message FROM messages \
+    ORDER BY RANDOM() LIMIT " + str(n))
     messages = cursor.fetchall()
     
     db.close()
     
     return messages
 
-@app.route("/",methods=['POST','GET'])
+@app.route("/",methods=["POST","GET"])
 def main():
-    if request.method == 'GET':
-        render_template("submit.html",submit=False)
+    if request.method == "GET":
+        return render_template("submit.html",submit=True)
     else:
         insert_message(request)
-        render_template("submit.html",submit=True)
+        return render_template("submit.html",submit=True)
         
 @app.route("/view/")
 def view():
     to_display = random_messages(5)
-    render_template("view.html",messages=to_display)
+    return render_template("view.html",messages=to_display)
+
+
         
