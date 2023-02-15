@@ -21,36 +21,33 @@ def insert_message(request):
     message = request.form["message"]
     handle = request.form["handle"]
     
-    db = get_message_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT COUNT(*) FROM messages")
+    with get_message_db() as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT COUNT(*) FROM messages")
     
-    message_id = cursor.fetchone()[0] + 1
+        message_id = cursor.fetchone()[0] + 1
     
-    cmd = f"INSERT INTO messages VALUES \
-    ({message_id},{handle},{message})"
-    cursor.execute(cmd)
+        cmd = f"INSERT INTO messages (id,handle,message) \
+        VALUES ({message_id},'{handle}','{message}')"
+        cursor.execute(cmd)
     
-    db.commit()
-    db.close()
+        db.commit()
     
     return [message,handle]
     
 def random_messages(n):
-    db = get_message_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT handle,message FROM messages \
-    ORDER BY RANDOM() LIMIT " + str(n))
-    messages = cursor.fetchall()
-    
-    db.close()
+    with get_message_db() as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT handle,message FROM messages \
+        ORDER BY RANDOM() LIMIT " + str(n))
+        messages = cursor.fetchall()
     
     return messages
 
 @app.route("/",methods=["POST","GET"])
 def main():
     if request.method == "GET":
-        return render_template("submit.html",submit=True)
+        return render_template("submit.html",submit=False)
     else:
         insert_message(request)
         return render_template("submit.html",submit=True)
