@@ -1,11 +1,17 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 {% block header %}
   <h1>Message Bank</h1>
 {% endblock %}
 
 {% block links %}
+<nav>
     <p><a href="/">Submit messages</a><p>
     <p><a href="/view/">View messages</a><p>
+</nav>
 {% endblock %}
+        
+        <hr>
         
 {% block header2 %}
 {% endblock %}
